@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Real Estate Price Prediction</title>
+  <style>
+  body {
+    font-family: "Arial", sans-serif;
+    background-color: #f3f7ff;
+    margin: 0;
+    padding: 0;
+  }
+  .banner-image {
+    width: 100%;
+    height: auto;
+    display: block;
+  }
+  .container {
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: #ffffff;
+    border-radius: 5px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  }
+  h1 {
+    text-align: center;
+    font-family: "Arial", sans-serif;
+    color: #333333;
+  }
+    form {
+      max-width: 400px;
+      margin: 0 auto;
+    }
+    label {
+      display: block;
+      margin-bottom: 7px;
+      color: #333333;
+      font-weight: bold;
+    }
+    input[type="text"],
+    input[type="number"],
+    select {
+      width: 100%;
+      padding: 10px;
+      margin-bottom: 10px;
+      border-radius: 3px;
+      border: 1px solid #cccccc;
+      font-family: "Arial", sans-serif;
+    }
+    input[type="submit"] {
+      background-color: #528cfe;
+      color: white;
+      padding: 10px 20px;
+      border: none;
+      border-radius: 3px;
+      cursor: pointer;
+      font-family: "Arial", sans-serif;
+    }
+    input[type="submit"]:hover {
+      background-color: #0056fe;
+    }
+    h2 {
+      margin-top: 20px;
+      font-family: "Arial", sans-serif;
+      color: #333333;
+    }
+    p {
+      font-weight: bold;
+      color: #333333;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <img src="{{url_for('static', filename='pic.jpg')}}" class="banner-image" alt="Banner Image">
+    <h1>Real Estate Price Prediction</h1>
+    <form action="/predict" method="POST">
+      <label for="Area">Area (in square meter):</label>
+      <input type="text" id="Area" name="Area" required>
+
+      <label for="City">City:</label>
+      <select id="City" name="City" required>
+	<option value="בת ים">Bat Yam</option>
+	<option value="באר שבע">Be'er Sheva</option>
+	<option value="בית שאן">Beit She'an</option>
+	<option value="דימונה">Dimona</option>
+	<option value="אילת">Eilat</option>
+	<option value="גבעת שמואל">Givat Shmuel
+	<option value="חיפה">Haifa</option>
+	<option value="הרצליה">Herzliya</option>
+	<option value="הוד השרון">Hod HaSharon</option>
+	<option value="חולון">Holon</option>
+	<option value="ירושלים">Jerusalem</option>
+	<option value="כפר סבא">Kfar Saba</option>
+	<option value="קרית ביאליק">Kiryat Bialik</option>
+	<option value="נהריה">Nahariya</option>
+	<option value="נס ציונה">Ness Ziona</option>
+	<option value="נתניה">Netanya</option>
+	<option value="נוף הגליל">Nof Hagalil</option>
+	<option value="פתח תקווה">Petah Tikva</option>
+	<option value="רעננה">Ra'anana</option>
+	<option value="רמת גן">Ramat Gan</option>
+	<option value="רחובות">Rehovot</option>
+	<option value="ראשון לציון">Rishon LeZion</option>
+	<option value="שוהם">Shoham</option>
+	<option value="תל אביב">Tel Aviv</option>
+	<option value="צפת">Tzfat</option>
+	<option value="יהוד מונוסון">Yehud-Monosson</option>
+	<option value="זכרון יעקב">Zichron Yaakov</option>
+      </select>
+
+      <label for="rank">Wealthy level of the City Area:</label>
+      <select id="rank" name="rank" required>
+        <option value="1">1</option>
+        <option value="2">2</option>
+        <option value="3">3</option>
+        <option value="4">4</option>
+        <option value="5">5</option>
+        <option value="6">6</option>
+        <option value="7">7</option>
+        <option value="8">8</option>
+        <option value="9">9</option>
+        <option value="10">10</option>
+      </select>
+
+      <label for="type">Type of Property:</label>
+      <select id="type" name="type" required>
+        <option value="דירה">Apartment</option>
+        <option value="בניין">Building</option>
+        <option value="קוטג">Cottage</option>
+        <option value="דופלקס">Duplex</option>
+        <option value="נחלה">Estate</option>
+        <option value="דירת גן">Garden Apartment</option>
+        <option value="מגרש">Land plot</option>
+        <option value="מיני פנטהאוז">Mini Penthouse</option>
+        <option value="פנטהאוז">Penthouse</option>
+        <option value="בית פרטי">Private house</option>
+        <option value="דירת גג">Roof Apartment</option>
+        <option value="קוטג' טורי">Terraced cottage</option>
+        <option value="דו משפחתי">Two-family house</option>
+        <option value="דירת נופש">Vacation Apartment</option>
+        <option value="אחר">Other</option>
+      </select>
+
+      <label for="room_number">Room Number:</label>
+      <input type="number" id="room_number" name="room_number" required> 
+ 
+      <label for="num_of_images">Number of images:</label>
+      <input type="number" id="num_of_images" name="num_of_images" required>                            
+          
+      <label for="hasElevator">Is there an elevator?</label>
+      <select id="hasElevator" name="hasElevator" required>
+        <option value="0">No</option>
+        <option value="1">Yes</option>
+      </select>
+
+      <label for="hasParking">Is there parking?</label>
+      <select id="hasParking" name="hasParking" required>
+        <option value="0">No</option>
+        <option value="1">Yes</option>
+      </select>
+
+      <label for="hasBars">Is there bars?</label>
+      <select id="hasBars" name="hasBars" required>
+        <option value="0">No</option>
+        <option value="1">Yes</option>
+      </select>
+
+      <label for="hasStorage">Is there a storage room?</label>
+      <select id="hasStorage" name="hasStorage" required>
+        <option value="0">No</option>
+        <option value="1">Yes</option>
+      </select>
+
+      <label for="hasAirCondition">Is there an Air Conditioner?</label>
+      <select id="hasAirCondition" name="hasAirCondition" required>
+        <option value="0">No</option>
+        <option value="1">Yes</option>
+      </select>
+
+      <label for="hasBalcony">Is there a balcony?</label>
+      <select id="hasBalcony" name="hasBalcony" required>
+        <option value="0">No</option>
+        <option value="1">Yes</option>
+      </select>
+
+      <label for="hasMamad">Is there a mamad?</label>
+      <select id="hasMamad" name="hasMamad" required>
+        <option value="0">No</option>
+        <option value="1">Yes</option>
+      </select>
+
+      <label for="handicapFriendly">Is it handicap Friendly?</label>
+      <select id="handicapFriendly" name="handicapFriendly" required>
+        <option value="0">No</option>
+        <option value="1">Yes</option>
+      </select>
+
+      <label for="entranceDate">When is the entrance date?</label>
+      <select id="entranceDate" name="entranceDate" required>
+        <option value="not_defined">Not defined</option>
+        <option value="flexible">Flexible</option>
+        <option value="less_than_6_months">Less than 6 months</option>
+        <option value="months_6_12">Between 6 and 12 months</option>
+        <option value="above_year">More than a year</option>
+      </select>
+
+      <label for="description">description (number of words):</label>
+      <input type="number" id="description" name="description" required>
+
+      <label for="floor">floor:</label>
+      <input type="number" id="floor" name="floor" required> 
+
+      <label for="total_floors">total number of floors:</label>
+      <input type="number" id="total_floors" name="total_floors" required>  
+
+      <label for="condition">Condition of the property:</label>
+      <select id="condition" name="condition" required>
+        <option value="שמור">Good condition</option>
+        <option value="דורש שיפוץ">Needs renovation</option>
+        <option value="חדש">New</option>
+        <option value="לא צויין">Not defined</option>
+        <option value="ישן">Old</option>
+        <option value="משופץ">Renovated</option>
+      </select>
+
+      <label for="furniture">Are there furniture?</label>
+      <select id="furniture" name="furniture" required>
+        <option value="מלא">Furnished</option>
+        <option value="לא צויין">Not defined</option>
+        <option value="אין">Not furnished</option>
+        <option value="חלקי">Partly</option>
+      </select>
+
+      <input type="submit" value="Quick Price Prediction">
+    </form>
+
+    {% if prediction %}
+    <h2>Prediction Result:</h2>
+    <p>The predicted price of the property is: {{ prediction[0] }} NIS</p>
+    {% endif %}
+  </div>
+</body>
+</html>
